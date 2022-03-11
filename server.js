@@ -1,28 +1,50 @@
-// const { MongoClient} = require('mongodb');
+const mongoose = require("mongoose");
+const express = require("express");
+const bodyParser = require('body-parser');
+User = require('./server/model/user'),
+jsonwebtoken = require("jsonwebtoken");
 
-// async function main() {
-//     const url = "mongodb+srv://demo:wakaso@06@cluster0.empua.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+const dotenv = require("dotenv");
+dotenv.config();
 
-//     const client = new MongoClient(url);
+const app = express()
+app.use(bodyParser.json());
 
-//     try {
-//         await client.connect();
-//         await listDatabases(client);
+const port = 8000
 
-//     } catch (e) {
-//         console.error(e);
-//     } finally {
-//         await client.close();
-//     }
-// }
+app.listen(port, () =>{
+    console.log(`connection is setup at port ${port}`)
+})
 
-// main().catch(console.error);
+app.use(express.json())
 
-// async function listDatabases(client) {
-//     const databasesList = await client.db().admin().listDatabases();
+const articlesRouter = require('./server/routes/articles')
+app.use('/articles' ,articlesRouter)
 
-//     console.log("Databases:");
-//     databasesList.databases.forEach(db => {
-//         console.log(`-${db.name}`);
-//     })
-// }
+app.get('/',(req,res)=>{
+    res.send('Welcome on the main page');
+});
+
+mongoose.connect(process.env.DBCONNECTION,{useNewUrlParser: true});
+
+connection = mongoose.connection;
+connection.once("open",()=>{
+    console.log("connected to db");
+});
+
+
+app.use(function(req, res, next) {
+    if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
+      jsonwebtoken.verify(req.headers.authorization.split(' ')[1], 'RESTFULAPIs', function(err, decode) {
+        if (err) req.user = undefined;
+        req.user = decode;
+        next();
+      });
+    } else {
+      req.user = undefined;
+      next();
+    }
+  });
+  var routes = require('./server/routes/user-routes');
+  routes(app);
+  
