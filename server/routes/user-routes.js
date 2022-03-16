@@ -1,5 +1,8 @@
+import express from "express";
+import userHandlers from ("../controller/userController");
+
 module.exports = function(app) {
-    var userHandlers = require('../controller/userController.js');
+    
     // todoList Routes
     app.route('/tasks')
         .post(userHandlers.loginRequired, userHandlers.profile);
