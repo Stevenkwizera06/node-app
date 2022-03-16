@@ -1,4 +1,3 @@
-
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import express from 'express';
@@ -25,6 +24,24 @@ describe("GET /articles", () =>{
 
         });
     });
+});
+	
+
+	describe('ARTICLE TEST', () => {
+		/**
+		 * SHOULD NOT GET  ALL ARTICLES
+		 */
+	describe("GET /articles", () =>{
+		it("it should not get all articles", (done) =>{
+			chai.request(server)
+			.get("article")
+			.end((err, response) => {
+			   
+			done();
+	
+			});
+		});
+	
 
 	 /**
      * CREAT A NEW ARTICLE
@@ -39,6 +56,23 @@ describe("POST /articles", () =>{
 
         });
     });
+});
+
+	 /**
+     *NOT CREAT A NEW ARTICLE
+     */
+describe("POST /articles", () =>{
+    it("it should not get a new article", (done) =>{
+        chai.request(server)
+        .get("articls")
+        .end((err, response) => {
+           
+        done();
+
+        });
+    });
+});
+
 
 	  /**
      * GET ONE ARTICLE
@@ -53,12 +87,44 @@ describe("PUT /articles:id", () =>{
 
         });
     });
+});
+
+	 /**
+     * NOT GET ONE ARTICLE
+     */
+describe("PUT /articles", () =>{
+    it("it should not get one articles if we not put id on the path", (done) =>{
+        chai.request(server)
+        .get("articles")
+        .end((err, response) => {
+           
+        done();
+
+        });
+    });
+});
 
 	/**
 		 * update article
 		 */
 	 describe("PATCH /articles:id", () =>{
 		it("it should UPDATE blogs by ID", (done) =>{
+			chai.request(server)
+			.patch("articles:id")
+			.end((err, response) => {
+			done();
+	
+			});
+		});
+	});
+});
+
+
+	/**
+		 * NOT update article
+		 */
+	 describe("PATCH /articleS", () =>{
+		it("it should not UPDATE articles if we not add ID on the path ", (done) =>{
 			chai.request(server)
 			.patch("articles:id")
 			.end((err, response) => {
@@ -80,16 +146,22 @@ describe("PUT /articles:id", () =>{
 				});
 			});
 		});
+	});
+
+		/**
+		 * NOT delete article
+		 */
+		 describe("DELETE /articles", () =>{
+			it("it should not DELETE article if we not add ID on the path", (done) =>{
+				chai.request(server)
+				.patch("articles:id")
+				.end((err, response) => {
+				done();
+		
+				});
+			});
+		});
 });
-});
-});
-});
-
-
-
-
-
-
 
 
 
