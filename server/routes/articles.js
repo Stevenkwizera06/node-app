@@ -1,5 +1,4 @@
 import express from "express";
-// import req from "express/lib/request";
 import Articles from "../../server/model/articles.js";
 var router = express.Router();
 
