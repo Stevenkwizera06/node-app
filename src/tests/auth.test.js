@@ -1,8 +1,9 @@
+import mongoose from "mongoose";
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import express from 'express';
 import server from '../../server/routes/articles.js';
-//import app from '../../server/routes/user-routes.js';
+// import app from '../../server/routes/user-routes.js';
 
 
 
@@ -162,11 +163,6 @@ describe("PUT /articles", () =>{
 			});
 		});
 });
-
-
-
-
-
 
 
 // describe("USER AUTHENTICATION TESTS", () => {

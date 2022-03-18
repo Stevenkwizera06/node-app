@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 import express from "express";
 import bodyParser from "body-parser";
 import jsonwebtoken from "jsonwebtoken";
-import User from "./model/user.js";
-import router from "router";
+// import User from "./model/user.js";
+// import router from "router";
 import articlesRouter from "./routes/articles.js";
+import {loginRequired, profile, register , sign_in} from "../server/controller/userController.js";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -22,7 +23,11 @@ app.use(express.json())
 
 
 
-app.use('/articles' ,articlesRouter)
+app.use('/articles' ,articlesRouter);
+// app.use('/', userRoutes);
+  app.route('/').post(loginRequired, profile);
+  app.route('/auth/register').post(register);
+  app.route('/auth/sign_in').post(sign_in);
 
 app.get('/',(req,res)=>{
     res.send('Welcome on the main page');
@@ -52,5 +57,5 @@ app.use(function(req, res, next) {
   
   // routes(app);
 
-export default app
+export default app;
   

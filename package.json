@@ -5,10 +5,11 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start:dev": "cross-env NODE_ENV=dev nodemon --exec babel-node server/server.js",
-    "start": "cross-env NODE_ENV=prod node server/server.js",
+    
+    "start": "node server/server.js",
     "test": "cross-env NODE_ENV=test nyc --reporter=text mocha --recursive --exit --timeout 10000 --require @babel/register src/tests",
-    "build": "babel src --out-dir dist"
+    "build": "babel src --out-dir dist",
+    "dev": "nodemon server/server.js"
   },
   "keywords": [
     "crud",
