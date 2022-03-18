@@ -1,7 +1,10 @@
+import express from "express";
+import userHandlers from "../controller/userController.js";
+
 module.exports = function(app) {
-    var userHandlers = require('../controller/userController.js');
-    // todoList Routes
-    app.route('/tasks')
+    
+    // Articles Routes
+    app.route('/')
         .post(userHandlers.loginRequired, userHandlers.profile);
     app.route('/auth/register')
         .post(userHandlers.register);

@@ -1,13 +1,15 @@
-const mongoose = require("mongoose");
-const express = require("express");
-const bodyParser = require('body-parser');
-User = require('./server/model/user'),
-jsonwebtoken = require("jsonwebtoken");
+import mongoose from "mongoose";
+import express from "express";
+import bodyParser from "body-parser";
+import jsonwebtoken from "jsonwebtoken";
+import User from "./model/user.js";
+import router from "router";
+import articlesRouter from "./routes/articles.js";
 
-const dotenv = require("dotenv");
+import dotenv from "dotenv";
 dotenv.config();
 
-const app = express()
+const app = express();
 app.use(bodyParser.json());
 
 const port = 8000
@@ -18,7 +20,8 @@ app.listen(port, () =>{
 
 app.use(express.json())
 
-const articlesRouter = require('./server/routes/articles')
+
+
 app.use('/articles' ,articlesRouter)
 
 app.get('/',(req,res)=>{
@@ -27,7 +30,7 @@ app.get('/',(req,res)=>{
 
 mongoose.connect(process.env.DBCONNECTION,{useNewUrlParser: true});
 
-connection = mongoose.connection;
+let connection = mongoose.connection;
 connection.once("open",()=>{
     console.log("connected to db");
 });
@@ -36,15 +39,18 @@ connection.once("open",()=>{
 app.use(function(req, res, next) {
     if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
       jsonwebtoken.verify(req.headers.authorization.split(' ')[1], 'RESTFULAPIs', function(err, decode) {
-        if (err) req.user = undefined;
-        req.user = decode;
+        if (err) req.User = undefined;
+        req.User = decode;
         next();
       });
     } else {
-      req.user = undefined;
+      req.User = undefined;
       next();
     }
   });
-  var routes = require('./server/routes/user-routes');
-  routes(app);
+ 
+  
+  // routes(app);
+
+export default app
   

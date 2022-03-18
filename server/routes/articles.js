@@ -1,7 +1,7 @@
-const express = require("express")
-const req = require("express/lib/request")
-const router = express.Router()
-const Articles = require('../model/articles')
+import express from "express";
+import Articles from "../../server/model/articles.js";
+var router = express.Router();
+
 
 
 
@@ -24,7 +24,7 @@ router.post('/', async (req,res) => {
         body:req.body.body,
     })
     article.save((err,data) => {
-        res.status(200).json({code:200, message: 'Article Added Successfully',
+        res.status(201).json({code:201, message: 'Article Added Successfully',
         addArticle:data})
     
     })
@@ -68,4 +68,4 @@ router.patch('/:ArtID',async(req,res)=>{
 
 
 
-module.exports = router
+export default router
