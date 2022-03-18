@@ -12,7 +12,6 @@
     "dev": "nodemon server/server.js"
 
 
-  
   },
   "keywords": [
     "crud",
