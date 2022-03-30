@@ -27,6 +27,8 @@ import bcrypt from "bcrypt";
   }
 });
 
+
+
 UserSchema.methods.comparePassword = function(password) {
   return bcrypt.compareSync(password, this.hash_password);
 };
