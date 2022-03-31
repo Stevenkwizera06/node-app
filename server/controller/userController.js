@@ -2,10 +2,11 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import User from "../model/user.js";
+import express from "express";
 
 // User = mongoose.model('User');
-
-export const register = function(req, res) {
+const router = express.Router();
+router.post('/register', (req, res)=>{
   let newUser = new User(req.body);
   newUser.hash_password = bcrypt.hashSync(req.body.password, 10);
   newUser.save(function(err, user) {
@@ -18,9 +19,11 @@ export const register = function(req, res) {
       return res.json(user);
     }
   });
-};
+})
 
-export const sign_in = function(req, res) {
+  
+
+router.post('/sign_in', (req, res)=>{
   User.findOne({
     email: req.body.email
   }, function(err, user) {
@@ -30,23 +33,30 @@ export const sign_in = function(req, res) {
     }
     return res.json({ token: jwt.sign({ email: user.email, fullName: user.fullName, _id: user._id }, 'RESTFULAPIs') });
   });
-};
+});
 
-export const loginRequired = function(req, res, next) {
-  if (req.user) {
-    next();
-  } else {
+ 
 
-    return res.status(401).json({ message: 'Unauthorized user!!' });
-  }
-};
-export const profile = function(req, res, next) {
-  if (req.user) {
-    res.send(req.user);
-    next();
-  } 
-  else {
-   return res.status(401).json({ message: 'Invalid token' });
-  }
-};
+
+// router.post('loginRequired', (req, res, next)=>{
+//   if (req.user) {
+//     next();
+//   } else {
+
+//     return res.status(401).json({ message: 'Unauthorized user!!' });
+//   }
+// });
+
+  
+// export const profile = function(req, res, next) {
+//   if (req.user) {
+//     res.send(req.user);
+//     next();
+//   } 
+//   else {
+//    return res.status(401).json({ message: 'Invalid token' });
+//   }
+// };
+
+export default router
 

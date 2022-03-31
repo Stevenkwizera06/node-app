@@ -2,10 +2,8 @@ import mongoose from "mongoose";
 import express from "express";
 import bodyParser from "body-parser";
 import jsonwebtoken from "jsonwebtoken";
-// import User from "./model/user.js";
-// import router from "router";
 import articlesRouter from "./routes/articles.js";
-import {loginRequired, profile, register , sign_in} from "../server/controller/userController.js";
+import UserRouter from "./controller/userController.js";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -19,15 +17,8 @@ app.listen(port, () =>{
     console.log(`connection is setup at port ${port}`)
 })
 
-app.use(express.json())
-
-
-
-app.use('/articles' ,articlesRouter);
-// app.use('/', userRoutes);
-  app.route('/').post(loginRequired, profile);
-  app.route('/auth/register').post(register);
-  app.route('/auth/sign_in').post(sign_in);
+app.use(express.json());
+app.use('/article', articlesRouter)
 
 app.get('/',(req,res)=>{
     res.send('Welcome on the main page');
@@ -40,22 +31,19 @@ connection.once("open",()=>{
     console.log("connected to db");
 });
 
-
-app.use(function(req, res, next) {
-    if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
-      jsonwebtoken.verify(req.headers.authorization.split(' ')[1], 'RESTFULAPIs', function(err, decode) {
-        if (err) req.User = undefined;
-        req.User = decode;
-        next();
-      });
-    } else {
-      req.User = undefined;
-      next();
-    }
-  });
+app.use('/',UserRouter)
+// app.use(function(req, res, next) {
+//     if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
+//       jsonwebtoken.verify(req.headers.authorization.split(' ')[1], 'RESTFULAPIs', function(err, decode) {
+//         if (err) req.User = undefined;
+//         req.User = decode;
+//         next();
+//       });
+//     } else {
+//       req.User = undefined;
+//       next();
+//     }
+//   });
  
-  
-  // routes(app);
-
 export default app;
   

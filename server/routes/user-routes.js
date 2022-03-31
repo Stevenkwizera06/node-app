@@ -1,10 +1,10 @@
-import express from "express";
-import app from '../server.js';
-import {loginRequired, profile, register , sign_in} from "../controller/userController.js";
+// import express from "express";
+// import app from '../server.js';
+// import {loginRequired, profile, register , sign_in} from "../controller/userController.js";
 
 // const userRoutes = function(app) {
     
-    // Articles Routes
+    
 //     app.route('/')
 //         .post(loginRequired, profile);
 //     app.route('/auth/register')
