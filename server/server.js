@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 app.use(bodyParser.json());
 
-const port = 8000
+const port = process.env.PORT ||8000
 
 app.listen(port, () =>{
     console.log(`connection is setup at port ${port}`)
