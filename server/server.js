@@ -1,5 +1,6 @@
-import mongoose from "mongoose";
+
 import express from "express";
+import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import jsonwebtoken from "jsonwebtoken";
 import articlesRouter from "./routes/articles.js";
